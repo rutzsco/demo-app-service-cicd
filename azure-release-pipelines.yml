@@ -19,3 +19,13 @@ stages:
     appName: 'rutzsco-app-service-api-ci'
     dockerRegistryPassword: $(dockerRegistryPassword)
     linuxFxVersion: 'DOCKER|rutzscocr.azurecr.io/demo-api:$(resources.pipeline.build.runName)'
+- template: azure-release-pipelines-stage-template.yml
+  parameters:
+    stageName: 'QA'
+    environment: 'QA-APP-SERVICE'
+    azureSubscription: ${{ variables.azureSubscription }}
+    resourceGroupName: 'rutzsco-app-service-cicd'
+    region: 'East US'
+    appName: 'rutzsco-app-service-api-qa'
+    dockerRegistryPassword: $(dockerRegistryPassword)
+    linuxFxVersion: 'DOCKER|rutzscocr.azurecr.io/demo-api:$(resources.pipeline.build.runName)'
