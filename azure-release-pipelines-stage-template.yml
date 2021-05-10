@@ -32,14 +32,6 @@ stages:
           deploy:
   
             steps:
-            - task: Bash@3
-              inputs:
-                targetType: 'inline'
-                script: |
-                  # Write your commands here
-                  echo 'linuxFxVersion'
-                  echo ${{ parameters.linuxFxVersion }}
-
             - task: AzureResourceGroupDeployment@2
               displayName: '1. Create App Service'
               inputs:
