@@ -17,5 +17,5 @@ stages:
     resourceGroupName: 'rutzsco-app-service-cicd'
     region: 'East US'
     appName: 'rutzsco-app-service-api-ci'
-    dockerRegistryPassword: 'East US'
+    dockerRegistryPassword: $(dockerRegistryPassword)
     linuxFxVersion: 'DOCKER|rutzscocr.azurecr.io/demo-api'

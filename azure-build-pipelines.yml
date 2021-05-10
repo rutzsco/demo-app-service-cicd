@@ -12,7 +12,7 @@ pool:
 
 variables:
   dockerRegistryServiceConnection: '194d664f-f187-4cde-bc1a-02b8486a5356'
-  imageRepository: 'demoapi'
+  imageRepository: 'demo-api'
   containerRegistry: 'rutzscocr.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Demo.API/Dockerfile'
   tag: '$(Build.BuildNumber)'
