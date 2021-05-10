@@ -38,7 +38,7 @@ stages:
                 script: |
                   # Write your commands here
                   echo 'linuxFxVersion'
-                  echo $(linuxFxVersion)
+                  echo $linuxFxVersion
 
             - task: AzureResourceGroupDeployment@2
               displayName: '1. Create App Service'
