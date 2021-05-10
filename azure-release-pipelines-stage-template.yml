@@ -35,9 +35,9 @@ stages:
             - task: AzureResourceGroupDeployment@2
               displayName: '1. Create App Service'
               inputs:
-                azureSubscription: $(azureSubscription)
-                resourceGroupName: $(resourceGroupName)
-                location: $(region)
+                azureSubscription: ${{ parameters.azureSubscription }}
+                resourceGroupName: ${{ parameters.resourceGroupName }}
+                location: ${{ parameters.region }}
                 csmFile: '$(Pipeline.Workspace)/build/Infrastructure/appservice-web-app-linux.json'
-                overrideParameters: '-appName $(appName) -linuxFxVersion $(linuxFxVersion):$(Build.TriggeredBy.BuildId) -dockerRegistryPassword $(dockerRegistryPassword)'
+                overrideParameters: '-appName ${{ parameters.appName }} -linuxFxVersion ${{ parameters.linuxFxVersion }}:$(Build.TriggeredBy.BuildId) -dockerRegistryPassword ${{ parameters.dockerRegistryPassword }}'
                 deploymentOutputs: ResourceGroupDeploymentOutputs
