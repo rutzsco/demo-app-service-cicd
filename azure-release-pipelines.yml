@@ -18,4 +18,4 @@ stages:
     region: 'East US'
     appName: 'rutzsco-app-service-api-ci'
     dockerRegistryPassword: $(dockerRegistryPassword)
-    linuxFxVersion: 'DOCKER|rutzscocr.azurecr.io/demo-api:$(Build.TriggeredBy.BuildId)'
+    linuxFxVersion: 'DOCKER|rutzscocr.azurecr.io/demo-api:$(resources.pipeline.build.runName)'
