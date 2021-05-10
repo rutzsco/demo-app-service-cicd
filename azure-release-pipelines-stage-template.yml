@@ -32,13 +32,6 @@ stages:
           deploy:
   
             steps:
-            - task: Bash@3
-              inputs:
-                targetType: 'inline'
-                script: |
-                  # Write your commands here
-                  set linuxFxVersion'
-                  echo $linuxFxVersion
 
             - task: AzureResourceGroupDeployment@2
               displayName: '1. Create App Service'
@@ -47,5 +40,5 @@ stages:
                 resourceGroupName: ${{ parameters.resourceGroupName }}
                 location: ${{ parameters.region }}
                 csmFile: '$(Pipeline.Workspace)/build/Infrastructure/appservice-web-app-linux.json'
-                overrideParameters: '-appName ${{ parameters.appName }} -linuxFxVersion ${{ parameters.linuxFxVersion }} -dockerRegistryPassword ${{ parameters.dockerRegistryPassword }}'
+                overrideParameters: '-appName ${{ parameters.appName }} -sku standard -skuCode S1 -linuxFxVersion ${{ parameters.linuxFxVersion }} -dockerRegistryPassword ${{ parameters.dockerRegistryPassword }}'
                 deploymentOutputs: ResourceGroupDeploymentOutputs
