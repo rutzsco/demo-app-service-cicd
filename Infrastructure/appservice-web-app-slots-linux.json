@@ -60,8 +60,7 @@
       "location": "[parameters('location')]",
       "tags": null,
       "dependsOn": [
-        "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
-        "[resourceId('Microsoft.Web/sites/slots', parameters('appName'), 'staging')]"
+        "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
       ],
       "properties": {
         "name": "[parameters('appName')]",
