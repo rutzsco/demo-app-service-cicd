@@ -18,4 +18,4 @@ stages:
     region: 'East US'
     appName: 'rutzsco-app-service-api-v2'
     buildNumber: $(resources.pipeline.build.runName)
-    linuxFxVersion: 'DOCKER|rutzscocr.azurecr.io/demo-api:$(resources.pipeline.build.runName)'
+    containerVersion: 'rutzscocr.azurecr.io/demo-api:$(resources.pipeline.build.runName)'

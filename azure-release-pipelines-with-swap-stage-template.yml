@@ -13,7 +13,7 @@ parameters:
   default: ''
 - name: buildNumber
   default: ''
-- name: linuxFxVersion
+- name: containerVersion
   default: ''
 
 stages:
@@ -41,7 +41,7 @@ stages:
                 deployToSlotOrASE: true
                 resourceGroupName: ${{ parameters.resourceGroupName }}
                 slotName: staging
-                containers: ${{ parameters.linuxFxVersion }}
+                containers: ${{ parameters.containerVersion }}
                 appSettings: '-APPLICATION_VERSION ${{ parameters.buildNumber }}'
             
             - task: AzureAppServiceManage@0
