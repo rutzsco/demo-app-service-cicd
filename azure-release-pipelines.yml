@@ -14,7 +14,7 @@ stages:
     stageName: 'CI'
     environment: 'CI-APP-SERVICE'
     azureSubscription: ${{ variables.azureSubscription }}
-    resourceGroupName: 'rutzsco-app-service-cicd'
+    resourceGroupName: 'rutzsco-app-service-api-ci'
     region: 'East US'
     appName: 'rutzsco-app-service-api-ci'
     dockerRegistryPassword: $(dockerRegistryPassword)
