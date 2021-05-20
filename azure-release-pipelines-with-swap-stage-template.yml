@@ -58,7 +58,7 @@ stages:
                 containers: ${{ parameters.containerVersion }}
                 appSettings: '-APPLICATION_VERSION ${{ parameters.buildNumber }} -DOCKER_REGISTRY_SERVER_URL https://rutzscocr.azurecr.io -DOCKER_REGISTRY_SERVER_USERNAME ${{ parameters.dockerRegistryUsername }} -DOCKER_REGISTRY_SERVER_PASSWORD ${{ parameters.dockerRegistryPassword }}'
             
-         routeTraffic:
+          routeTraffic:
           delay: 60s
           steps:
           - task: AzureAppServiceManage@0
