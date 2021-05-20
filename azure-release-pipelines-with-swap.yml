@@ -24,7 +24,7 @@ stages:
     stageName: 'PROD'
     environment: 'PROD-APP-SERVICE'
     azureSubscription: ${{ variables.azureSubscription }}
-    resourceGroupName: 'rutzsco-app-service-prod'
+    resourceGroupName: 'rutzsco-app-service-api-prod'
     region: 'East US'
     appName: 'rutzsco-app-service-api-prod'
     buildNumber: $(resources.pipeline.build.runName)
