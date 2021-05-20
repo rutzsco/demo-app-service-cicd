@@ -9,7 +9,7 @@ variables:
   azureSubscription: 'Demo Account'
 
 stages:
-- template: azure-release-pipelines-stage-template.yml
+- template: azure-release-pipelines-infra-template.yml
   parameters:
     stageName: 'CI'
     environment: 'CI-APP-SERVICE'
@@ -19,7 +19,7 @@ stages:
     appName: 'rutzsco-app-service-api-ci'
     dockerRegistryPassword: $(dockerRegistryPassword)
     linuxFxVersion: 'DOCKER|rutzscocr.azurecr.io/demo-api:$(resources.pipeline.build.runName)'
-- template: azure-release-pipelines-stage-template.yml
+- template: azure-release-pipelines-infra-template.yml
   parameters:
     stageName: 'PROD'
     environment: 'PROD-APP-SERVICE'
