@@ -15,6 +15,10 @@ parameters:
   default: ''
 - name: containerVersion
   default: ''
+- name: dockerRegistryPassword
+  default: ''
+- name: dockerRegistryUsername
+  default: ''
 
 stages:
   - stage: ${{ parameters.stageName }}
@@ -40,7 +44,7 @@ stages:
                 resourceGroupName: ${{ parameters.resourceGroupName }}
                 location: ${{ parameters.region }}
                 csmFile: '$(Pipeline.Workspace)/build/Infrastructure/appservice-web-app-slots-linux-v2.json'
-                overrideParameters: '-appName ${{ parameters.appName }} -sku standard -skuCode S1 -linuxFxVersion TBD -dockerRegistryPassword ${{ parameters.dockerRegistryPassword }}'
+                overrideParameters: '-appName ${{ parameters.appName }} -sku standard -skuCode S1 -linuxFxVersion TBD -dockerRegistryPassword TBD'
                 deploymentOutputs: ResourceGroupDeploymentOutputs
 
             - task: AzureWebAppContainer@1
@@ -52,7 +56,7 @@ stages:
                 resourceGroupName: ${{ parameters.resourceGroupName }}
                 slotName: staging
                 containers: ${{ parameters.containerVersion }}
-                appSettings: '-APPLICATION_VERSION ${{ parameters.buildNumber }} -DOCKER_REGISTRY_SERVER_URL https://rutzscocr.azurecr.io -DOCKER_REGISTRY_SERVER_USERNAME ${{ parameters.linuxFxVersion }} -DOCKER_REGISTRY_SERVER_PASSWORD ${{ parameters.dockerRegistryPassword }}'
+                appSettings: '-APPLICATION_VERSION ${{ parameters.buildNumber }} -DOCKER_REGISTRY_SERVER_URL https://rutzscocr.azurecr.io -DOCKER_REGISTRY_SERVER_USERNAME ${{ parameters.dockerRegistryUsername }} -DOCKER_REGISTRY_SERVER_PASSWORD ${{ parameters.dockerRegistryPassword }}'
             
             - task: AzureAppServiceManage@0
               displayName: '3. Swap Slots'

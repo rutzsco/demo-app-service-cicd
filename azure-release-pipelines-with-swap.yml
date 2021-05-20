@@ -7,7 +7,7 @@ resources:
   
 variables:
   azureSubscription: 'Demo Account'
-
+  dockerRegistryUsername: 'rutzscocr'
 stages:
 - template: azure-release-pipelines-with-swap-stage-template.yml
   parameters:
@@ -19,6 +19,8 @@ stages:
     appName: 'rutzsco-app-service-api-ci'
     buildNumber: $(resources.pipeline.build.runName)
     containerVersion: 'rutzscocr.azurecr.io/demo-api:$(resources.pipeline.build.runName)'
+    dockerRegistryUsername: $(dockerRegistryUsername)
+    dockerRegistryPassword: $(dockerRegistryPassword)
 - template: azure-release-pipelines-with-swap-stage-template.yml
   parameters:
     stageName: 'PROD'
@@ -29,3 +31,5 @@ stages:
     appName: 'rutzsco-app-service-api-prod'
     buildNumber: $(resources.pipeline.build.runName)
     containerVersion: 'rutzscocr.azurecr.io/demo-api:$(resources.pipeline.build.runName)'
+    dockerRegistryUsername: $(dockerRegistryUsername)
+    dockerRegistryPassword: $(dockerRegistryPassword)
