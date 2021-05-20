@@ -14,7 +14,7 @@ stages:
     stageName: 'CI'
     environment: 'CI-APP-SERVICE'
     azureSubscription: ${{ variables.azureSubscription }}
-    resourceGroupName: 'rutzsco-app-service-cicd-ci'
+    resourceGroupName: 'rutzsco-app-service-cicd'
     region: 'East US'
     appName: 'rutzsco-app-service-api-ci'
     buildNumber: $(resources.pipeline.build.runName)
