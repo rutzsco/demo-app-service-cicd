@@ -25,43 +25,30 @@ stages:
     displayName: ${{ parameters.stageName }}
 
     jobs:
-    - deployment: Deploy
-      displayName: Deploy
+    - deployment:
       environment: ${{ parameters.environment }}
       pool:
-        vmImage: 'ubuntu-latest'
-  
-      strategy:
-        runOnce:
-          deploy:
-  
+        name: 'ubuntu-latest'
+      strategy:                   
+        blueGreen:    
+          preDeploy:
             steps:
-            
-            - task: AzureResourceGroupDeployment@2
-              displayName: '1. Create App Service'
-              inputs:
-                azureSubscription: ${{ parameters.azureSubscription }}
-                resourceGroupName: ${{ parameters.resourceGroupName }}
-                location: ${{ parameters.region }}
-                csmFile: '$(Pipeline.Workspace)/build/Infrastructure/appservice-web-app-slots-linux-v2.json'
-                overrideParameters: '-appName ${{ parameters.appName }} -sku standard -skuCode S1 -linuxFxVersion TBD -dockerRegistryPassword TBD'
-                deploymentOutputs: ResourceGroupDeploymentOutputs
-
-            - task: AzureWebAppContainer@1
-              displayName: '2. Deploy to Stage Slot'
-              inputs:
-                azureSubscription: ${{ parameters.azureSubscription }}
-                appName: ${{ parameters.appName }}
-                deployToSlotOrASE: true
-                resourceGroupName: ${{ parameters.resourceGroupName }}
-                slotName: staging
-                containers: ${{ parameters.containerVersion }}
-                appSettings: '-APPLICATION_VERSION ${{ parameters.buildNumber }} -DOCKER_REGISTRY_SERVER_URL https://rutzscocr.azurecr.io -DOCKER_REGISTRY_SERVER_USERNAME ${{ parameters.dockerRegistryUsername }} -DOCKER_REGISTRY_SERVER_PASSWORD ${{ parameters.dockerRegistryPassword }}'
-            
-            - task: AzureAppServiceManage@0
-              displayName: '3. Swap Slots'
-              inputs:
-                azureSubscription: ${{ parameters.azureSubscription }}
-                WebAppName: ${{ parameters.appName }}
-                ResourceGroupName: ${{ parameters.resourceGroupName }}
-                SourceSlot: staging
+            - script: echo initialize, cleanup, install certs...
+          deploy:              
+            steps:                                   
+            - script: echo deploy app updates... 
+          routeTraffic:
+            delay: 60m
+            steps:
+            - script: echo route traffic...   
+          postRouteTaffic:
+            pool: server       # lifecycle job pool type
+            steps:          
+            - script: echo monitor app health        
+          on:
+            failure:
+              steps:
+              - script: echo rollback, cleanup..     
+            success:
+              steps:
+              - script: echo checks passed...
