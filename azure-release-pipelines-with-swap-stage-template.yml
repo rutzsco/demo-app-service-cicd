@@ -44,7 +44,7 @@ stages:
                 resourceGroupName: ${{ parameters.resourceGroupName }}
                 location: ${{ parameters.region }}
                 csmFile: '$(Pipeline.Workspace)/build/Infrastructure/appservice-web-app-slots-linux-v2.json'
-                overrideParameters: '-appName ${{ parameters.appName }} -sku standard -skuCode S1 -linuxFxVersion TBD -dockerRegistryPassword TBD'
+                overrideParameters: '-appName ${{ parameters.appName }} -sku standard -skuCode S1 -linuxFxVersion TBD -dockerRegistryPassword ${{ parameters.dockerRegistryPassword }}'
                 deploymentOutputs: ResourceGroupDeploymentOutputs
 
             - task: AzureWebAppContainer@1
