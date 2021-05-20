@@ -32,9 +32,19 @@ stages:
           deploy:
   
             steps:
+            
+            - task: AzureResourceGroupDeployment@2
+              displayName: '1. Create App Service'
+              inputs:
+                azureSubscription: ${{ parameters.azureSubscription }}
+                resourceGroupName: ${{ parameters.resourceGroupName }}
+                location: ${{ parameters.region }}
+                csmFile: '$(Pipeline.Workspace)/build/Infrastructure/appservice-web-app-slots-linux-v2.json'
+                overrideParameters: '-appName ${{ parameters.appName }} -sku standard -skuCode S1 -linuxFxVersion ${{ parameters.linuxFxVersion }} -dockerRegistryPassword ${{ parameters.dockerRegistryPassword }}'
+                deploymentOutputs: ResourceGroupDeploymentOutputs
 
             - task: AzureWebAppContainer@1
-              displayName: '1. Deploy to Stage Slot'
+              displayName: '2. Deploy to Stage Slot'
               inputs:
                 azureSubscription: ${{ parameters.azureSubscription }}
                 appName: ${{ parameters.appName }}
@@ -42,10 +52,10 @@ stages:
                 resourceGroupName: ${{ parameters.resourceGroupName }}
                 slotName: staging
                 containers: ${{ parameters.containerVersion }}
-                appSettings: '-APPLICATION_VERSION ${{ parameters.buildNumber }}'
+                appSettings: '-APPLICATION_VERSION ${{ parameters.buildNumber }} -DOCKER_REGISTRY_SERVER_URL ${{ parameters.linuxFxVersion }} -DOCKER_REGISTRY_SERVER_USERNAME ${{ parameters.linuxFxVersion }} -DOCKER_REGISTRY_SERVER_PASSWORD ${{ parameters.dockerRegistryPassword }}'
             
             - task: AzureAppServiceManage@0
-              displayName: '2. Swap Slots'
+              displayName: '3. Swap Slots'
               inputs:
                 azureSubscription: ${{ parameters.azureSubscription }}
                 WebAppName: ${{ parameters.appName }}
